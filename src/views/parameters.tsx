@@ -27,12 +27,26 @@ const style = {
   pb: 3,
 };
 const data: string[] = ["model", "price", "comfort", "seats", "color"];
+const primaryColors: string[] = [
+  "RED",
+  "BLUE",
+  "YELLOW",
+  "GREEN",
+  "ORANGE",
+  "PURPLE",
+  "CYAN",
+  "MAGENTA",
+  "BROWN",
+  "PINK",
+  "WHITE",
+  "BLACK",
+];
 export default function Parameters() {
   const [input, setInput] = useState("");
-  const [critaria, setCrtaria] = useContext(dataContext);
+  const [critaria, setCrtaria, desireColor, setDesireColor] =
+    useContext(dataContext);
   const [rows, setRows] = useState<any>();
   const [larg, setLarge] = React.useState<any>();
-  const [desireColor, setDesireColor] = React.useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
   useEffect(() => {
     const l = JSON.parse(localStorage.getItem("rows") as string);
@@ -42,28 +56,32 @@ export default function Parameters() {
     setOpen(false);
   };
   const calculateTopsis = () => {
+    console.log(rows);
+
     const evaluteMatrix = rows.map((e: any) => {
       let newE = { ...e };
       delete newE.id;
       delete newE.name;
       delete newE.model;
-      newE = Object.values(newE).filter((num: any) => !isNaN(num));
+      newE = Object.values(newE);
       return newE;
     });
     const weights = critaria?.map((e) => e.weight);
     console.log(evaluteMatrix, weights);
 
-    const topsis = new performTOPSIS(evaluteMatrix, weights, [
-      true,
-      true,
-      true,
-      false,
-    ]);
+    const topsis = new performTOPSIS(
+      evaluteMatrix,
+      weights,
+      [false, true, true, true],
+      desireColor
+    );
     topsis.calc();
     console.log(topsis);
-    let indexBest = topsis?.bestDistance.findIndex(
-      (e: number) => e == Math.min(...topsis?.bestDistance)
+    let indexBest = topsis?.bestSimilarity?.findIndex(
+      (e: number) => e == Math.min(...topsis?.bestSimilarity)
     );
+    console.log(indexBest);
+
     setLarge(rows[indexBest]?.model);
     setOpen(true);
   };
@@ -74,7 +92,7 @@ export default function Parameters() {
           key={i}
           type="number"
           onChange={(e) => {
-            setCrtaria((prev) =>
+            setCrtaria!((prev) =>
               prev.map((el) => {
                 if (el.name == elm.name) {
                   return {
@@ -89,7 +107,7 @@ export default function Parameters() {
           required
           id="outlined-required"
           label={elm.name}
-          defaultValue={0}
+          defaultValue={critaria[i].weight || 0}
         />
       ))}
       <FormControl className="w-1/2">
@@ -98,11 +116,16 @@ export default function Parameters() {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label="Desire Color"
-          onChange={(e) => setDesireColor(e.target.value as string)}
+          defaultValue={desireColor}
+          onChange={(e) => {
+            setDesireColor!(e.target.value as string);
+          }}
         >
-          <MenuItem value={"Red"}>Red</MenuItem>
-          <MenuItem value={"Blue"}>Blue</MenuItem>
-          <MenuItem value={"Gray"}>Gray</MenuItem>
+          {primaryColors.map((color, i) => (
+            <MenuItem key={i} value={color}>
+              {color}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
 

@@ -266,11 +266,15 @@ export default function FullFeaturedCrudGrid() {
           }}
         />
       </Box>
-      <div className="flex gap-3">
-        <button onClick={save} className="w-full py-2">
+      <div className="flex gap-3 w-full justify-center">
+        <Button onClick={save} variant="contained" className="py-2">
           Save
-        </button>
-        <Link to={"/parameters"}>back</Link>
+        </Button>
+        <Link to={"/parameters"}>
+          <Button variant="contained" className="py-2">
+            back
+          </Button>
+        </Link>
       </div>
     </div>
   );

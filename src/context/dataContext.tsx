@@ -7,7 +7,9 @@ type DataContextType = [
   criteria?: Criteria[],
   setCriteria?: React.Dispatch<
     React.SetStateAction<{ name: string; weight: number }[]>
-  >
+  >,
+  desireColor?: string,
+  setDesireColor?: React.Dispatch<React.SetStateAction<string>>
 ];
 export const dataContext = createContext<DataContextType>([]);
 type DataContextProviderProps = {
@@ -35,8 +37,9 @@ export default function DataContextProvider({
       weight: 0,
     },
   ]);
+  const [desireColor, setDesireColor] = useState<string>("");
   return (
-    <dataContext.Provider value={[critaria, setCrtaria]}>
+    <dataContext.Provider value={[critaria, setCrtaria,desireColor,setDesireColor]}>
       {children}
     </dataContext.Provider>
   );

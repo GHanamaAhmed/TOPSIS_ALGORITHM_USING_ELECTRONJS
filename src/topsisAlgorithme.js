@@ -34,6 +34,8 @@ class Topsis {
       for (let j = 0; j < this.columnSize; j++) {
         this.normalizedDecision[i][j] =
           this.evaluationMatrix[i][j] / Math.sqrt(sqrdSum[j]);
+        if (isNaN(this.normalizedDecision[i][j]))
+          this.normalizedDecision[i][j] = 0;
       }
     }
   }
@@ -131,15 +133,15 @@ class Topsis {
 }
 
 // Example usage
-const evaluationMatrix = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-];
-const weightMatrix = [0.3, 0.5, 0.2];
-const criteria = [true, true, true];
+// const evaluationMatrix = [
+//   [1, 1, 1, "gray"],
+//   [4, 5, 6, "blue"],
+//   [1, 1, 1, "red"],
+// ];
+// const weightMatrix = [0.3, 0.5, 0.1, 0.1];
+// const criteria = [true, true, true,true];
 
-const topsis = new Topsis(evaluationMatrix, weightMatrix);
-topsis.calc();
-console.log(topsis);
+// const topsis = new Topsis(evaluationMatrix, weightMatrix, criteria, "blue");
+// topsis.calc();
+// console.log(topsis);
 export { Topsis as performTOPSIS };
