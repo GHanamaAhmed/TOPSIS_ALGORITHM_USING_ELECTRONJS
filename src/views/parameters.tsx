@@ -57,7 +57,7 @@ export default function Parameters() {
   };
   const calculateTopsis = () => {
     console.log(rows);
-
+    // if(critaria?.find((row) => isNaN(row.weight))) return alert("Weights must be a Number")
     const evaluteMatrix = rows.map((e: any) => {
       let newE = { ...e };
       delete newE.id;
@@ -133,7 +133,10 @@ export default function Parameters() {
         <Button onClick={calculateTopsis} variant="contained">
           Calcul
         </Button>
-        <Link to={"/topsis"}>Edit</Link>
+
+        <Link to={"/topsis"}>
+          <Button variant="contained">Edit</Button>
+        </Link>
       </div>
 
       <Modal
