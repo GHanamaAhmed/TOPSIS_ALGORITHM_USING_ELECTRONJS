@@ -145,6 +145,13 @@ export default function FullFeaturedCrudGrid() {
       type: "number",
     },
     {
+      field: "speed",
+      headerName: "speed",
+      width: 100,
+      editable: true,
+      type: "number",
+    },
+    {
       field: "color",
       headerName: "color",
       width: 100,
@@ -243,6 +250,7 @@ export default function FullFeaturedCrudGrid() {
   };
   const save = () => {
     localStorage.setItem("rows", JSON.stringify(rows));
+    alert("saved successfully")
   };
   React.useEffect(() => {
     const l = JSON.parse(localStorage.getItem("rows") as string);

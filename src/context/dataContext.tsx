@@ -33,6 +33,10 @@ export default function DataContextProvider({
       weight: 0,
     },
     {
+      name: "speed",
+      weight: 0,
+    },
+    {
       name: "color",
       weight: 0,
     },

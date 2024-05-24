@@ -26,7 +26,7 @@ const style = {
   px: 4,
   pb: 3,
 };
-const data: string[] = ["model", "price", "comfort", "seats", "color"];
+const data: string[] = ["model", "price", "comfort", "seats", "speed", "color"];
 const primaryColors: string[] = [
   "RED",
   "BLUE",
@@ -72,7 +72,7 @@ export default function Parameters() {
     const topsis = new performTOPSIS(
       evaluteMatrix,
       weights,
-      [false, true, true, true],
+      [false, true, true, true, true],
       desireColor
     );
     topsis.calc();
